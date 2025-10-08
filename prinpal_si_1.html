@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula-Eco - Educación Ambiental</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --verde-principal: #2e7d32;
+            --verde-claro: #81c784;
+            --verde-oscuro: #1b5e20;
+            --beige: #f5f5dc;
+            --marron: #5d4037;
+            --blanco: #ffffff;
+            --gris-claro: #f9f9f9;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--beige);
+            color: var(--marron);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: var(--verde-principal);
+            color: var(--blanco);
+            padding: 1rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 2rem;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+        
+        nav a {
+            color: var(--blanco);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--verde-claro);
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(46, 125, 50, 0.8), rgba(27, 94, 32, 0.8)), url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80') center/cover;
+            color: var(--blanco);
+            padding: 5rem 0;
+            text-align: center;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--verde-oscuro);
+            color: var(--blanco);
+            padding: 12px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            background-color: var(--verde-principal);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--blanco);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--blanco);
+            color: var(--verde-principal);
+        }
+        
+        .intro {
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .intro h2 {
+            color: var(--verde-principal);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .intro p {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+        
+        .features {
+            padding: 4rem 0;
+            background-color: var(--gris-claro);
+        }
+        
+        .features h2 {
+            text-align: center;
+            color: var(--verde-principal);
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background-color: var(--blanco);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-img {
+            height: 200px;
+            background-color: var(--verde-claro);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--verde-oscuro);
+            font-size: 4rem;
+        }
+        
+        .feature-content {
+            padding: 1.5rem;
+        }
+        
+        .feature-content h3 {
+            color: var(--verde-principal);
+            margin-bottom: 1rem;
+        }
+        
+        .videos {
+            padding: 4rem 0;
+        }
+        
+        .videos h2 {
+            text-align: center;
+            color: var(--verde-principal);
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+        
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .video-card {
+            background-color: var(--blanco);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            overflow: hidden;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .video-info {
+            padding: 1.5rem;
+        }
+        
+        .video-info h3 {
+            color: var(--verde-principal);
+            margin-bottom: 0.5rem;
+        }
+        
+        .cta {
+            background-color: var(--verde-principal);
+            color: var(--blanco);
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .cta h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .cta p {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            font-size: 1.1rem;
+        }
+        
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        footer {
+            background-color: var(--verde-oscuro);
+            color: var(--blanco);
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--verde-claro);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: var(--blanco);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: var(--verde-claro);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: background-color 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--verde-claro);
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-leaf"></i>
+                <h1>Aula-Eco</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">Educación</a></li>
+                    <li><a href="#">Proyectos</a></li>
+                    <li><a href="#">Recursos</a></li>
+                    <li><a href="estadistics.html">Estadísticas</a></li>
+                    <li><a href="#" class="btn" style="padding: 8px 16px; font-size: 0.9rem;">Iniciar Sesión</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h2>Educación Ambiental para un Futuro Sostenible</h2>
+            <p>Aula-Eco es una plataforma educativa dedicada a promover la conciencia ambiental y fomentar prácticas de reciclaje en comunidades escolares y vecinales.</p>
+            <div class="btn-group">
+                <a href="#" class="btn">Explorar Recursos</a>
+                <a href="estadistics.html" class="btn btn-outline">Ver Estadísticas</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="intro">
+        <div class="container">
+            <h2>¿Qué es Aula-Eco?</h2>
+            <p>Aula-Eco es un proyecto educativo que busca concienciar sobre la importancia del reciclaje y el cuidado del medio ambiente a través de recursos didácticos, actividades interactivas y seguimiento de impacto ambiental. Nuestra misión es formar ciudadanos responsables con el planeta a través de la educación práctica y accesible.</p>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <h2>Nuestros Pilares</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-img">
+                        <i class="fas fa-recycle"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Reciclaje Eficiente</h3>
+                        <p>Aprende a separar correctamente los residuos y descubrir el impacto positivo que tiene en el medio ambiente.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-img">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Educación Ambiental</h3>
+                        <p>Recursos educativos para todas las edades sobre sostenibilidad, cambio climático y conservación.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-img">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Participación Comunitaria</h3>
+                        <p>Fomentamos la creación de comunidades eco-conscientes a través de actividades y proyectos colaborativos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="videos">
+        <div class="container">
+            <h2>Recursos Educativos</h2>
+            <div class="video-grid">
+                <div class="video-card">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Video educativo 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h3>Introducción al Reciclaje</h3>
+                        <p>Aprende los conceptos básicos del reciclaje y cómo puedes empezar a hacerlo en casa.</p>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Video educativo 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h3>El Ciclo de los Materiales</h3>
+                        <p>Descubre cómo los materiales se transforman a través del proceso de reciclaje.</p>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Video educativo 3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h3>Proyectos Escolares Sostenibles</h3>
+                        <p>Inspiración para proyectos ambientales que puedes implementar en tu escuela o comunidad.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2>Únete al Movimiento Ambiental</h2>
+            <p>Descubre cómo puedes marcar la diferencia en tu comunidad a través de acciones simples y educación ambiental.</p>
+            <div class="btn-group">
+                <a href="#" class="btn">Registrarse</a>
+                <a href="estadistics.html" class="btn btn-outline">Ver Estadísticas de Reciclaje</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Aula-Eco</h3>
+                    <p>Plataforma educativa para la conciencia ambiental y promoción del reciclaje en comunidades.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul>
+                        <li><a href="#">Inicio</a></li>
+                        <li><a href="#">Educación</a></li>
+                        <li><a href="#">Proyectos</a></li>
+                        <li><a href="#">Recursos</a></li>
+                        <li><a href="estadistics.html">Estadísticas</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Recursos</h3>
+                    <ul>
+                        <li><a href="#">Guías de Reciclaje</a></li>
+                        <li><a href="#">Material Didáctico</a></li>
+                        <li><a href="#">Blog Ambiental</a></li>
+                        <li><a href="#">Eventos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contacto</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> info@aula-eco.org</li>
+                        <li><i class="fas fa-phone"></i> +123 456 7890</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Ciudad, País</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Aula-Eco. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
