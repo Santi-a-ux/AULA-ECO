@@ -167,11 +167,13 @@ El sistema viene con usuarios pre-configurados para pruebas:
 | id       | INTEGER | ID único (autoincremental)     |
 | user_id  | INTEGER | ID del usuario                 |
 | material | TEXT    | Tipo de material reciclado     |
-| kg       | REAL    | Cantidad (unidades)            |
+| kg       | REAL    | Cantidad en unidades*          |
 | points   | INTEGER | Puntos otorgados               |
 | date     | TEXT    | Fecha del registro             |
 | center   | TEXT    | Centro de reciclaje            |
 | item     | TEXT    | Tipo de objeto específico      |
+
+**Nota:** El campo `kg` almacena la cantidad en unidades (no peso), se mantiene este nombre por razones de compatibilidad con versiones anteriores.
 
 ### Scripts Disponibles
 
