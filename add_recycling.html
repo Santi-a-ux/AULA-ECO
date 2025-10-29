@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Reciclaje - Aula-Eco</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --verde-principal: #2e7d32;
+            --verde-claro: #81c784;
+            --verde-oscuro: #1b5e20;
+            --beige: #f5f5dc;
+            --marron: #5d4037;
+            --blanco: #ffffff;
+            --gris-claro: #f9f9f9;
+            --rojo: #e53935;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--beige);
+            color: var(--marron);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--verde-principal);
+            color: var(--blanco);
+            padding: 1rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
+            color: var(--blanco);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--verde-claro);
+        }
+
+        .page-title {
+            background: linear-gradient(rgba(46, 125, 50, 0.8), rgba(27, 94, 32, 0.8)), url('https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80') center/cover;
+            color: var(--blanco);
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .page-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-title p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-section {
+            padding: 3rem 0;
+        }
+
+        .form-card {
+            background-color: var(--blanco);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .qr-box {
+            border: 2px dashed #c8e6c9;
+            background: #f3fff3;
+            border-radius: 10px;
+            padding: 1rem;
+        }
+        .qr-actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
+        .qr-preview { margin-top:10px; max-width:100%; border-radius:8px; display:none; }
+        .qr-hint { color:#2e7d32; margin-top:8px; display:none; }
+
+        .form-card h3 {
+            color: var(--verde-principal);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--marron);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--verde-principal);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .btn {
+            background-color: var(--verde-principal);
+            color: var(--blanco);
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: inline-block;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: var(--verde-oscuro);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--verde-principal);
+            border: 2px solid var(--verde-principal);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--verde-principal);
+            color: var(--blanco);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .material-guide {
+            background-color: var(--gris-claro);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .material-guide h4 {
+            color: var(--verde-principal);
+            margin-bottom: 1rem;
+        }
+
+        .material-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .material-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: var(--blanco);
+            border-radius: 6px;
+        }
+
+        .material-item i {
+            color: var(--verde-principal);
+            font-size: 1.2rem;
+        }
+
+        .success-message {
+            background-color: #e8f5e8;
+            color: #2e7d32;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            border: 1px solid #c8e6c9;
+            display: none;
+        }
+
+        .error-message {
+            background-color: #ffebee;
+            color: var(--rojo);
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            border: 1px solid #ffcdd2;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-leaf"></i>
+                <h1>Aula-Eco</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="prinpal_si_1.html">Inicio</a></li>
+                    <li><a href="prinpal_si_1.html#videos">Educación</a></li>
+                    <li><a href="add_recycling.html" class="active">Agregar Reciclaje</a></li>
+                    <li><a href="body_principal.html">Estadísticas</a></li>
+                    <li><a href="#" id="login-btn" class="btn" style="padding: 8px 16px; font-size: 0.9rem;">Iniciar Sesión</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-title">
+        <div class="container">
+            <h2>Registrar Objetos Reciclados</h2>
+            <p>Registra tus contribuciones al medio ambiente por cantidad de objetos (unidades) y ayuda a crear un futuro más sostenible.</p>
+        </div>
+    </section>
+
+    <section class="form-section">
+        <div class="container">
+            <div id="success-message" class="success-message">
+                <i class="fas fa-check-circle"></i> ¡Registro guardado exitosamente! Gracias por tu contribución al medio ambiente.
+            </div>
+            <div id="error-message" class="error-message">
+                <i class="fas fa-exclamation-triangle"></i> Error al guardar el registro. Por favor, verifica los datos e intenta nuevamente.
+            </div>
+
+            <div class="material-guide">
+                <h4><i class="fas fa-info-circle"></i> Guía de Materiales Reciclables</h4>
+                    <div class="material-grid">
+                        <div class="material-item">
+                            <i class="fas fa-box"></i>
+                            <div>
+                                <strong>Tetra Pak</strong><br>
+                                Envases y cajas Tetra Pak
+                            </div>
+                        </div>
+                        <div class="material-item">
+                            <i class="fas fa-cup-straw"></i>
+                            <div>
+                                <strong>Plástico PP</strong><br>
+                                Tapas, vasos y envases PP
+                            </div>
+                        </div>
+                        <div class="material-item">
+                            <i class="fas fa-can-food"></i>
+                            <div>
+                                <strong>Aluminio</strong><br>
+                                Latas y envases de aluminio
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+            <div class="form-card">
+                <h3><i class="fas fa-qrcode"></i> Escanear código QR (Simulado)</h3>
+                <div class="qr-box">
+                    <p>Abre la cámara o carga una imagen con un QR para una vista previa. Es solo una simulación (no se decodifica).</p>
+                    <div class="qr-actions">
+                        <button type="button" id="btn-qr-camera" class="btn"><i class="fas fa-camera"></i> Usar cámara</button>
+                        <button type="button" id="btn-qr-upload" class="btn btn-outline"><i class="fas fa-image"></i> Subir imagen</button>
+                        <input type="file" id="qr-camera-input" accept="image/*" capture="environment" style="display:none;" />
+                        <input type="file" id="qr-file-input" accept="image/*" style="display:none;" />
+                    </div>
+                    <img id="qr-preview" class="qr-preview" alt="Vista previa QR" />
+                    <div id="qr-hint" class="qr-hint"><i class="fas fa-check-circle"></i> Escaneo simulado completado.</div>
+                </div>
+            </div>
+
+            <div class="form-card">
+                <h3><i class="fas fa-recycle"></i> Nuevo Registro de Reciclaje</h3>
+                <form id="recycling-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="material">Tipo de Material *</label>
+                            <select id="material" name="material" required>
+                                <option value="">Seleccionar material...</option>
+                                <option value="Tetra Pak">Tetra Pak</option>
+                                <option value="Plástico PP">Plástico PP</option>
+                                <option value="Aluminio">Aluminio</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="item">Tipo de Objeto *</label>
+                            <select id="item" name="item" required>
+                                <option value="">Selecciona un objeto...</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="date">Fecha de Reciclaje *</label>
+                            <input type="date" id="date" name="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="center">Centro de Reciclaje (opcional)</label>
+                            <input type="text" id="center" name="center" placeholder="Nombre del centro o punto de reciclaje" value="intermediario de reciclaje S.A.S">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="quantity">Cantidad (unidades) *</label>
+                            <input type="number" id="quantity" name="quantity" step="1" min="1" placeholder="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="notes">Notas adicionales (opcional)</label>
+                            <textarea id="notes" name="notes" rows="3" placeholder="Describe detalles, condiciones, etc."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button type="submit" class="btn">
+                            <i class="fas fa-save"></i> Guardar Registro
+                        </button>
+                        <a href="body_principal.html" class="btn btn-outline">
+                            <i class="fas fa-chart-bar"></i> Ver Mis Estadísticas
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const API_BASE = '/api';
+
+        // Verificar login
+        const token = localStorage.getItem('aula_token');
+        const role = localStorage.getItem('aula_role');
+
+        // Manejar botón de login
+        const loginBtn = document.getElementById('login-btn');
+        if (token) {
+            loginBtn.textContent = 'Cerrar Sesión';
+            loginBtn.href = '#';
+            loginBtn.onclick = (e) => {
+                e.preventDefault();
+                localStorage.removeItem('aula_token');
+                localStorage.removeItem('aula_role');
+                location.reload();
+            };
+        } else {
+            loginBtn.textContent = 'Iniciar Sesión';
+            loginBtn.href = 'login.html';
+            loginBtn.onclick = null;
+        }
+
+        // Si no está logueado, redirigir
+        if (!token) {
+            window.location.href = 'login.html';
+        }
+
+        // Establecer fecha por defecto (hoy)
+        document.getElementById('date').valueAsDate = new Date();
+        // Centro por defecto
+    const DEFAULT_CENTER = 'intermediario de reciclaje S.A.S';
+        document.getElementById('center').value = DEFAULT_CENTER;
+
+        // Opciones dependientes de material para tipo de objeto
+        const materialSelect = document.getElementById('material');
+        const itemSelect = document.getElementById('item');
+        const ITEM_OPTIONS = {
+            'Tetra Pak': ['Envase Tetra Pak', 'Caja Tetra Pak'],
+            'Plástico PP': ['Tapa PP', 'Envase PP', 'Vaso PP'],
+            'Aluminio': ['Lata de aluminio', 'Envase de aluminio']
+        };
+        function refreshItemOptions() {
+            const mat = materialSelect.value;
+            const opts = ITEM_OPTIONS[mat] || [];
+            itemSelect.innerHTML = '<option value="">Selecciona un objeto...</option>' + opts.map(o => `<option value="${o}">${o}</option>`).join('');
+        }
+        materialSelect.addEventListener('change', refreshItemOptions);
+
+        // Manejar envío del formulario
+        document.getElementById('recycling-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(e.target);
+            const data = {
+                material: formData.get('material'),
+                item: formData.get('item'),
+                quantity: parseInt(formData.get('quantity'), 10),
+                date: formData.get('date'),
+                center: formData.get('center') || null,
+                notes: formData.get('notes') || null
+            };
+
+            try {
+                const response = await fetch(`${API_BASE}/recyclings`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    document.getElementById('success-message').style.display = 'block';
+                    document.getElementById('error-message').style.display = 'none';
+                    e.target.reset();
+                    document.getElementById('date').valueAsDate = new Date();
+                    document.getElementById('center').value = DEFAULT_CENTER;
+                    refreshItemOptions();
+                } else {
+                    throw new Error('Error al guardar');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('error-message').style.display = 'block';
+                document.getElementById('success-message').style.display = 'none';
+            }
+        });
+        
+        // QR simulado: abrir inputs y mostrar preview
+        const qrCamBtn = document.getElementById('btn-qr-camera');
+        const qrUpBtn = document.getElementById('btn-qr-upload');
+        const qrCamInput = document.getElementById('qr-camera-input');
+        const qrFileInput = document.getElementById('qr-file-input');
+        const qrPreview = document.getElementById('qr-preview');
+        const qrHint = document.getElementById('qr-hint');
+        
+        function readAndPreview(file){
+            if(!file) return;
+            const reader = new FileReader();
+            reader.onload = () => {
+                qrPreview.src = reader.result;
+                qrPreview.style.display = 'block';
+                qrHint.style.display = 'block';
+                // Autocompletar datos de forma simulada para no complicar la app
+                simulateFillFromQR();
+            };
+            reader.readAsDataURL(file);
+        }
+        function simulateFillFromQR(){
+            const mats = Object.keys(ITEM_OPTIONS);
+            const mat = mats[Math.floor(Math.random()*mats.length)];
+            materialSelect.value = mat;
+            refreshItemOptions();
+            const items = ITEM_OPTIONS[mat] || [];
+            if(items.length){ itemSelect.value = items[0]; }
+            const qty = document.getElementById('quantity');
+            if(!qty.value) qty.value = 1;
+            const dateInput = document.getElementById('date');
+            if(!dateInput.value) dateInput.valueAsDate = new Date();
+            const centerInput = document.getElementById('center');
+            if(!centerInput.value) centerInput.value = DEFAULT_CENTER;
+            qrHint.textContent = 'Datos simulados rellenados desde QR.';
+        }
+        qrCamBtn.addEventListener('click', ()=> qrCamInput.click());
+        qrUpBtn.addEventListener('click', ()=> qrFileInput.click());
+        qrCamInput.addEventListener('change', (e)=> readAndPreview(e.target.files[0]));
+        qrFileInput.addEventListener('change', (e)=> readAndPreview(e.target.files[0]));
+    </script>
+</body>
+</html>

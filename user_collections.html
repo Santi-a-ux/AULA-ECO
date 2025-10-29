@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Colección - Aula-Eco</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body{font-family:Segoe UI, Tahoma, Geneva, Verdana, sans-serif;background:#f5f5dc;color:#5d4037;padding:20px}
+        .container{max-width:1000px;margin:0 auto}
+        table{width:100%;border-collapse:collapse;background:#fff}
+        th,td{padding:12px;border-bottom:1px solid #eee}
+        th{background:#f0f0f0}
+        .btn{background:#2e7d32;color:#fff;padding:10px 16px;border:none;border-radius:6px;cursor:pointer}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mi Colección</h1>
+        <p>Lista de registros que tú has aportado.</p>
+        <button id="back" class="btn">Volver</button>
+        <div id="table-wrap" style="margin-top:20px">
+            <table id="records-table">
+                <thead>
+                    <tr><th>Fecha</th><th>Material</th><th>Objeto</th><th>Cantidad</th><th>Puntos</th><th>Centro</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function getToken(){return localStorage.getItem('aula_token')}
+        document.getElementById('back').addEventListener('click', ()=>window.location.href='body_principal.html')
+        async function loadMyRecords(){
+            const token = getToken();
+            if(!token){ alert('Debes iniciar sesión'); window.location.href='login.html'; return }
+            try{
+                const res = await fetch('/api/me/records', { headers: { 'Authorization': 'Bearer '+token } });
+                if(!res.ok){ throw new Error('No autorizado') }
+                const json = await res.json();
+                const tbody = document.querySelector('#records-table tbody');
+                tbody.innerHTML='';
+                json.items.forEach(r=>{
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `<td>${new Date(r.date).toLocaleDateString()}</td><td>${r.material}</td><td>${r.item||''}</td><td>${r.kg||0}</td><td>${r.points||''}</td><td>${r.center||'intermediario de reciclaje S.A.S'}</td>`;
+                    tbody.appendChild(tr);
+                })
+            }catch(err){ alert('Error cargando tus registros: '+err.message); }
+        }
+        loadMyRecords();
+    </script>
+</body>
+</html>

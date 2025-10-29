@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Aula-Eco</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f5f5dc; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .login-container { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 300px; }
+        input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; }
+        button { width: 100%; padding: 10px; background: #2e7d32; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #1b5e20; }
+        .error { color: red; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Iniciar Sesión</h2>
+        <input type="text" id="username" placeholder="Usuario" required>
+        <input type="password" id="password" placeholder="Contraseña" required>
+        <button onclick="login()">Ingresar</button>
+        <p class="error" id="error"></p>
+    <p>Usuarios de prueba:<br>Admin: Santiago / admin123<br>Usuarios: Julian, Anita, Mauricio (contraseña: user123)</p>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3000/api';
+        async function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorEl = document.getElementById('error');
+
+            try {
+                const res = await fetch(`${API_BASE}/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    localStorage.setItem('aula_token', data.token);
+                    localStorage.setItem('aula_role', data.role);
+                    alert('Login exitoso');
+                    window.location.href = 'prinpal_si_1.html';
+                } else {
+                    const error = await res.json();
+                    errorEl.textContent = error.error;
+                }
+            } catch (err) {
+                errorEl.textContent = 'Error de conexión: ' + err.message;
+            }
+        }
+    </script>
+</body>
+</html>

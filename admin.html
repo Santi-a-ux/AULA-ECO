@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Aula-Eco</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body{font-family:Arial,sans-serif;background:#f5f5dc;padding:20px}
+        .container{max-width:1200px;margin:0 auto}
+        .stats-overview{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin:20px 0}
+        .stat-card{background:#fff;border-radius:10px;padding:1.5rem;box-shadow:0 5px 15px rgba(0,0,0,0.1);display:flex;align-items:center;gap:15px}
+        .stat-icon{width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#fff}
+        .stat-icon.blue{background:#1976d2}
+        .stat-icon.green{background:#2e7d32}
+        .stat-icon.orange{background:#ff9800}
+        .stat-icon.red{background:#e53935}
+        .stat-info h3{font-size:1.8rem;margin-bottom:0.3rem;color:#1b5e20}
+        .charts-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(500px,1fr));gap:30px;margin:20px 0}
+        .chart-card{background:#fff;border-radius:10px;padding:1.5rem;box-shadow:0 5px 15px rgba(0,0,0,0.1)}
+        .chart-card h3{color:#2e7d32;margin-bottom:1rem;text-align:center}
+        .chart-container{position:relative;height:300px}
+        table{width:100%;border-collapse:collapse;background:#fff;margin-top:20px}
+        th,td{padding:12px;border-bottom:1px solid #eee}
+        th{background:#f0f0f0}
+        .btn{background:#2e7d32;color:#fff;padding:10px 16px;border:none;border-radius:6px;cursor:pointer;margin:10px;}
+        .btn:hover{background:#1b5e20}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Panel de Administrador</h1>
+        <p>Estadísticas globales de todos los usuarios.</p>
+        <button onclick="window.location.href='body_principal.html'" class="btn">Volver</button>
+
+        <div class="stats-overview">
+            <div class="stat-card">
+                <div class="stat-icon blue"><i class="fas fa-recycle"></i></div>
+                <div class="stat-info"><h3 id="total-records">0</h3><p>Total de Registros</p></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon green"><i class="fas fa-box"></i></div>
+                <div class="stat-info"><h3 id="total-qty">0</h3><p>Total de Objetos</p></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon orange"><i class="fas fa-star"></i></div>
+                <div class="stat-info"><h3 id="total-points">0</h3><p>Puntos Totales</p></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon red"><i class="fas fa-users"></i></div>
+                <div class="stat-info"><h3 id="active-users">0</h3><p>Usuarios Activos</p></div>
+            </div>
+        </div>
+
+        <div class="charts-container">
+            <div class="chart-card">
+                <h3>Objetos por Tipo de Material (Global)</h3>
+                <div class="chart-container"><canvas id="globalMaterialChart"></canvas></div>
+            </div>
+            <div class="chart-card">
+                <h3>Evolución (Objetos - Global)</h3>
+                <div class="chart-container"><canvas id="globalEvolutionChart"></canvas></div>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr><th>Usuario</th><th>Fecha</th><th>Material</th><th>Objeto</th><th>Cantidad</th><th>Puntos</th><th>Centro</th></tr>
+            </thead>
+            <tbody id="admin-table"></tbody>
+        </table>
+    </div>
+
+    <script>
+        const token = localStorage.getItem('aula_token');
+        const role = localStorage.getItem('aula_role');
+        if (!token || role !== 'admin') {
+            window.location.href = 'login.html';
+        }
+
+        // Cargar estadísticas globales
+        async function loadGlobalStats() {
+            try {
+                const res = await fetch('/api/global-stats', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                if (!res.ok) throw new Error('No autorizado');
+                const data = await res.json();
+                
+                document.getElementById('total-records').textContent = data.total_records;
+                document.getElementById('total-qty').textContent = data.total_qty || 0;
+                document.getElementById('total-points').textContent = data.total_points;
+                
+                // Calcular usuarios activos únicos
+                const usersRes = await fetch('/api/admin/recyclings', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                if (usersRes.ok) {
+                    const usersData = await usersRes.json();
+                    const uniqueUsers = new Set(usersData.items.map(r => r.user_id)).size;
+                    document.getElementById('active-users').textContent = uniqueUsers;
+                }
+            } catch (err) {
+                console.error('Error cargando estadísticas globales:', err);
+            }
+        }
+
+        // Cargar gráfico de materiales global
+        async function loadGlobalMaterialChart() {
+            try {
+                const res = await fetch('/api/stats', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                if (!res.ok) throw new Error('No autorizado');
+                const json = await res.json();
+                const labels = json.stats.map(s => s.material);
+                const data = json.stats.map(s => s.total_qty);
+                renderGlobalMaterialChart(labels, data);
+            } catch (err) {
+                console.error('Error cargando materiales globales:', err);
+                renderGlobalMaterialChart(['Tetra Pak', 'Plástico PP', 'Aluminio'], [40, 35, 45]);
+            }
+        }
+
+        function renderGlobalMaterialChart(labels, data) {
+            const ctx = document.getElementById('globalMaterialChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: ['#1976d2','#2e7d32','#ff9800','#607d8b','#e53935'],
+                        borderWidth: 0
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        // Cargar gráfico de evolución global
+        async function loadGlobalEvolutionChart() {
+            try {
+                const res = await fetch('/api/evolution', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                if (!res.ok) throw new Error('No autorizado');
+                const json = await res.json();
+                const labels = json.evolution.map(e => e.month);
+                const data = json.evolution.map(e => e.total_qty);
+                renderGlobalEvolutionChart(labels, data);
+            } catch (err) {
+                console.error('Error cargando evolución global:', err);
+                renderGlobalEvolutionChart(['2023-08', '2023-09', '2023-10'], [50, 75, 90]);
+            }
+        }
+
+        function renderGlobalEvolutionChart(labels, data) {
+            const ctx = document.getElementById('globalEvolutionChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Objetos reciclados (unidades)',
+                        data: data,
+                        backgroundColor: 'rgba(46, 125, 50, 0.2)',
+                        borderColor: '#2e7d32',
+                        borderWidth: 2,
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        async function loadAdminRecords() {
+            try {
+                const res = await fetch('/api/admin/recyclings', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                if (!res.ok) throw new Error('No autorizado');
+                const json = await res.json();
+                const tbody = document.getElementById('admin-table');
+                tbody.innerHTML = '';
+                json.items.forEach(r => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `<td>${r.username}</td><td>${new Date(r.date).toLocaleDateString()}</td><td>${r.material}</td><td>${r.item||''}</td><td>${r.kg||0}</td><td>${r.points||''}</td><td>${r.center||'intermediario de reciclaje S.A.S'}</td>`;
+                    tbody.appendChild(tr);
+                });
+            } catch (err) {
+                alert('Error: ' + err.message);
+            }
+        }
+
+        // Inicializar
+        loadGlobalStats();
+        loadGlobalMaterialChart();
+        loadGlobalEvolutionChart();
+        loadAdminRecords();
+    </script>
+</body>
+</html>

@@ -302,103 +302,13 @@
             background-color: var(--rojo);
         }
         
-        .login-section {
-            background-color: var(--gris-claro);
-            padding: 3rem 0;
+        .material-tag.otro {
+            background-color: var(--naranja);
         }
-        
-        .login-container {
-            max-width: 500px;
-            margin: 0 auto;
-            background-color: var(--blanco);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .login-header {
-            background-color: var(--verde-principal);
-            color: var(--blanco);
-            padding: 1.5rem;
-            text-align: center;
-        }
-        
-        .login-header h2 {
-            font-size: 1.8rem;
-        }
-        
-        .login-form {
-            padding: 2rem;
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--verde-oscuro);
-            font-weight: 500;
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-        
-        .form-control:focus {
-            border-color: var(--verde-principal);
-            outline: none;
-        }
-        
-        .form-options {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 1.5rem;
-            font-size: 0.9rem;
-        }
-        
-        .form-options a {
-            color: var(--verde-principal);
-            text-decoration: none;
-        }
-        
-        .btn {
-            display: inline-block;
-            background-color: var(--verde-principal);
-            color: var(--blanco);
-            padding: 12px 24px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-            width: 100%;
-            text-align: center;
-        }
-        
-        .btn:hover {
-            background-color: var(--verde-oscuro);
-        }
-        
-        .register-link {
-            text-align: center;
-            margin-top: 1.5rem;
-            font-size: 0.9rem;
-        }
-        
-        .register-link a {
-            color: var(--verde-principal);
-            text-decoration: none;
-            font-weight: 500;
-        }
+        /* Nuevos materiales */
+        .material-tag.tetra { background-color: #8d6e63; }
+    .material-tag.pp { background-color: #26a69a; }
+    .material-tag.aluminio { background-color: #607d8b; }
         
         footer {
             background-color: var(--verde-oscuro);
@@ -505,12 +415,11 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="index.html">Inicio</a></li>
-                    <li><a href="#">Educación</a></li>
-                    <li><a href="#">Proyectos</a></li>
-                    <li><a href="#">Recursos</a></li>
-                    <li><a href="estadistics.html" class="active">Estadísticas</a></li>
-                    <li><a href="#" class="btn" style="padding: 8px 16px; font-size: 0.9rem;">Iniciar Sesión</a></li>
+                    <li><a href="prinpal_si_1.html">Inicio</a></li>
+                    <li><a href="prinpal_si_1.html#videos">Educación</a></li>
+                    <li><a href="add_recycling.html">Agregar Reciclaje</a></li>
+                    <li><a href="body_principal.html" class="active">Estadísticas</a></li>
+                    <li><a href="#" id="login-btn" class="btn" style="padding: 8px 16px; font-size: 0.9rem;">Iniciar Sesión</a></li>
                 </ul>
             </nav>
         </div>
@@ -528,10 +437,9 @@
             <div class="dashboard-header">
                 <h2 class="dashboard-title">Panel de Control</h2>
                 <div class="dashboard-filters">
-                    <button class="filter-btn active">Última Semana</button>
-                    <button class="filter-btn">Último Mes</button>
-                    <button class="filter-btn">Último Año</button>
-                    <button class="filter-btn">Personalizado</button>
+                    <button class="filter-btn active" id="filter-week">Última Semana</button>
+                    <button class="filter-btn" id="filter-month">Último Mes</button>
+                    <button class="filter-btn" id="filter-year">Último Año</button>
                 </div>
             </div>
 
@@ -541,48 +449,48 @@
                         <i class="fas fa-recycle"></i>
                     </div>
                     <div class="stat-info">
-                        <h3>124 kg</h3>
-                        <p>Total Reciclado</p>
+                        <h3>0</h3>
+                        <p>Total de Registros</p>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon green">
-                        <i class="fas fa-tree"></i>
+                        <i class="fas fa-box"></i>
                     </div>
                     <div class="stat-info">
-                        <h3>8.2</h3>
-                        <p>Árboles Salvados</p>
+                        <h3>0</h3>
+                        <p>Total de Objetos</p>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon orange">
-                        <i class="fas fa-bolt"></i>
+                        <i class="fas fa-star"></i>
                     </div>
                     <div class="stat-info">
-                        <h3>342 kWh</h3>
-                        <p>Energía Ahorrada</p>
+                        <h3>0</h3>
+                        <p>Puntos Totales</p>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon red">
-                        <i class="fas fa-tint"></i>
+                        <i class="fas fa-users"></i>
                     </div>
                     <div class="stat-info">
-                        <h3>12,400 L</h3>
-                        <p>Agua Ahorrada</p>
+                        <h3>0</h3>
+                        <p>Usuarios Activos</p>
                     </div>
                 </div>
             </div>
 
             <div class="charts-container">
                 <div class="chart-card">
-                    <h3>Reciclaje por Tipo de Material</h3>
+                    <h3>Objetos por Tipo de Material</h3>
                     <div class="chart-container">
                         <canvas id="materialChart"></canvas>
                     </div>
                 </div>
                 <div class="chart-card">
-                    <h3>Evolución del Reciclaje (Últimos 6 meses)</h3>
+                    <h3>Evolución (Objetos en los últimos meses)</h3>
                     <div class="chart-container">
                         <canvas id="evolutionChart"></canvas>
                     </div>
@@ -590,92 +498,31 @@
             </div>
 
             <div class="recycling-table">
-                <div class="table-header">
-                    <h3>Registros de Reciclaje Recientes</h3>
-                    <a href="#" class="btn" style="padding: 8px 16px; font-size: 0.9rem;">Exportar Datos</a>
-                </div>
+                    <div class="table-header">
+                        <h3>Registros de Reciclaje Recientes</h3>
+                    </div>
                 <div class="table-content">
                     <table>
                         <thead>
                             <tr>
                                 <th>Fecha</th>
                                 <th>Material</th>
-                                <th>Cantidad (kg)</th>
+                                <th>Objeto</th>
+                                <th>Cantidad</th>
                                 <th>Puntos</th>
                                 <th>Centro de Reciclaje</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>15/10/2023</td>
-                                <td><span class="material-tag plastic">Plástico</span></td>
-                                <td>4.5</td>
-                                <td>45</td>
-                                <td>EcoCentro Norte</td>
-                            </tr>
-                            <tr>
-                                <td>14/10/2023</td>
-                                <td><span class="material-tag paper">Papel</span></td>
-                                <td>7.2</td>
-                                <td>72</td>
-                                <td>EcoCentro Sur</td>
-                            </tr>
-                            <tr>
-                                <td>12/10/2023</td>
-                                <td><span class="material-tag glass">Vidrio</span></td>
-                                <td>8.0</td>
-                                <td>80</td>
-                                <td>EcoCentro Este</td>
-                            </tr>
-                            <tr>
-                                <td>10/10/2023</td>
-                                <td><span class="material-tag metal">Metal</span></td>
-                                <td>3.5</td>
-                                <td>35</td>
-                                <td>EcoCentro Oeste</td>
-                            </tr>
-                            <tr>
-                                <td>08/10/2023</td>
-                                <td><span class="material-tag organic">Orgánico</span></td>
-                                <td>12.0</td>
-                                <td>120</td>
-                                <td>EcoCentro Norte</td>
+                                <td colspan="5" style="text-align:center; padding:40px; color:#666; font-style:italic;">
+                                    <i class="fas fa-spinner fa-spin" style="font-size:2rem; margin-bottom:10px; display:block;"></i>
+                                    Cargando registros...
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="login-section">
-        <div class="container">
-            <div class="login-container">
-                <div class="login-header">
-                    <h2>Iniciar Sesión</h2>
-                    <p>Accede a tu cuenta para ver tus estadísticas personalizadas</p>
-                </div>
-                <form class="login-form">
-                    <div class="form-group">
-                        <label for="email">Correo Electrónico</label>
-                        <input type="email" id="email" class="form-control" placeholder="tu@email.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Contraseña</label>
-                        <input type="password" id="password" class="form-control" placeholder="Contraseña" required>
-                    </div>
-                    <div class="form-options">
-                        <div>
-                            <input type="checkbox" id="remember">
-                            <label for="remember">Recordarme</label>
-                        </div>
-                        <a href="#">¿Olvidaste tu contraseña?</a>
-                    </div>
-                    <button type="submit" class="btn">Iniciar Sesión</button>
-                    <div class="register-link">
-                        ¿No tienes una cuenta? <a href="#">Regístrate aquí</a>
-                    </div>
-                </form>
             </div>
         </div>
     </section>
@@ -696,28 +543,17 @@
                 <div class="footer-column">
                     <h3>Enlaces Rápidos</h3>
                     <ul>
-                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="prinpal_si_1.html">Inicio</a></li>
                         <li><a href="#">Educación</a></li>
-                        <li><a href="#">Proyectos</a></li>
-                        <li><a href="#">Recursos</a></li>
-                        <li><a href="estadistics.html">Estadísticas</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Recursos</h3>
-                    <ul>
-                        <li><a href="#">Guías de Reciclaje</a></li>
-                        <li><a href="#">Material Didáctico</a></li>
-                        <li><a href="#">Blog Ambiental</a></li>
-                        <li><a href="#">Eventos</a></li>
+                        <li><a href="body_principal.html">Estadísticas</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h3>Contacto</h3>
                     <ul>
                         <li><i class="fas fa-envelope"></i> info@aula-eco.org</li>
-                        <li><i class="fas fa-phone"></i> +123 456 7890</li>
-                        <li><i class="fas fa-map-marker-alt"></i> Ciudad, País</li>
+                        
+                        <li><i class="fas fa-map-marker-alt"></i> Medellín, Colombia</li>
                     </ul>
                 </div>
             </div>
@@ -728,85 +564,330 @@
     </footer>
 
     <script>
-        // Gráfico de materiales reciclados
-        const materialCtx = document.getElementById('materialChart').getContext('2d');
-        const materialChart = new Chart(materialCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Plástico', 'Papel', 'Vidrio', 'Metal', 'Orgánico'],
-                datasets: [{
-                    data: [30, 25, 20, 15, 10],
-                    backgroundColor: [
-                        '#1976d2',  // Azul
-                        '#2e7d32',  // Verde
-                        '#ff9800',  // Naranja
-                        '#607d8b',  // Gris
-                        '#e53935'   // Rojo
-                    ],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'right',
-                        labels: {
-                            font: {
-                                size: 14
-                            }
-                        }
-                    }
-                }
-            }
-        });
+    const API_BASE = 'http://localhost:3000/api';
+    let currentFilter = 'week'; // week | month | year
 
-        // Gráfico de evolución del reciclaje
-        const evolutionCtx = document.getElementById('evolutionChart').getContext('2d');
-        const evolutionChart = new Chart(evolutionCtx, {
-            type: 'line',
-            data: {
-                labels: ['Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre'],
-                datasets: [{
-                    label: 'Cantidad Reciclada (kg)',
-                    data: [65, 78, 90, 81, 96, 124],
-                    backgroundColor: 'rgba(46, 125, 50, 0.2)',
-                    borderColor: '#2e7d32',
-                    borderWidth: 2,
-                    tension: 0.3,
-                    fill: true
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Kilogramos'
-                        }
+        // Verificar login al cargar
+        const token = localStorage.getItem('aula_token');
+        const role = localStorage.getItem('aula_role');
+        const isGuest = !token;
+
+        // Si no hay token, no salimos: mostramos un banner y cargamos datos públicos
+        if (isGuest) {
+            const dashboard = document.querySelector('.dashboard');
+            dashboard.insertAdjacentHTML('beforebegin', '<div style="text-align:center;padding:20px;background:#fff8e1;color:#8d6e63;border:1px solid #ffe0b2;"><h2>Modo Invitado</h2><p>Estás viendo datos globales públicos. <a href="login.html">Inicia sesión</a> para ver tus estadísticas personales.</p></div>');
+        }
+
+    // Código que se ejecuta solo si hay token
+        // Si admin, agregar botón admin
+        if (role === 'admin') {
+            const header = document.querySelector('.table-header h3');
+            header.innerHTML += ' <button id="admin-btn" class="btn" style="padding: 8px 16px; font-size: 0.9rem; margin-left:10px;">Vista Admin</button>';
+            document.getElementById('admin-btn').addEventListener('click', () => {
+                window.location.href = 'admin.html';
+            });
+        }
+
+        // Utilidades para token
+        function getToken() {
+            return localStorage.getItem('aula_token');
+        }
+
+        // Utilidades de filtro y clases
+        function getFromDateForFilter() {
+            const now = new Date();
+            const days = currentFilter === 'week' ? 7 : currentFilter === 'month' ? 30 : 365;
+            const from = new Date(now.getTime() - days * 24 * 60 * 60 * 1000);
+            return from.toISOString().slice(0, 10);
+        }
+
+        const materialClassMap = {
+            'Tetra Pak': 'tetra',
+            'Plástico PP': 'pp',
+            'Aluminio': 'aluminio',
+            'Otro': 'otro'
+        };
+
+        // Cargar estadísticas del panel
+        async function loadStatsPanel() {
+            try {
+                const statCards = document.querySelectorAll('.stat-card');
+                
+                if (!isGuest && role === 'admin') {
+                    // Para admin: datos globales
+                    const from = getFromDateForFilter();
+                    const res = await fetch(`${API_BASE}/global-stats?from=${from}`, {
+                        headers: { 'Authorization': 'Bearer ' + getToken() }
+                    });
+                    if (!res.ok) throw new Error('No autorizado');
+                    const data = await res.json();
+                    
+                    statCards[0].querySelector('h3').textContent = data.total_records;
+                    statCards[1].querySelector('h3').textContent = (data.total_qty || 0);
+                    statCards[2].querySelector('h3').textContent = data.total_points;
+                    
+                    // Obtener número de usuarios únicos (sin filtrar por fecha para reflejar todos los usuarios existentes)
+                    const usersRes = await fetch(`${API_BASE}/admin/recyclings`, {
+                        headers: { 'Authorization': 'Bearer ' + getToken() }
+                    });
+                    if (usersRes.ok) {
+                        const usersData = await usersRes.json();
+                        const uniqueUsers = new Set(usersData.items.map(r => r.user_id)).size;
+                        statCards[3].querySelector('h3').textContent = uniqueUsers;
                     }
+                } else if (!isGuest) {
+                    // Para usuarios normales: sus propios datos
+                    const from = getFromDateForFilter();
+                    const res = await fetch(`${API_BASE}/me/records?from=${from}`, {
+                        headers: { 'Authorization': 'Bearer ' + getToken() }
+                    });
+                    if (!res.ok) throw new Error('No autorizado');
+                    const data = await res.json();
+                    
+                    const totalRecords = data.items.length;
+                    const totalQty = data.items.reduce((sum, r) => sum + (r.kg || 0), 0);
+                    const totalPoints = data.items.reduce((sum, r) => sum + (r.points || 0), 0);
+                    
+                    statCards[0].querySelector('h3').textContent = totalRecords;
+                    statCards[1].querySelector('h3').textContent = totalQty.toString();
+                    statCards[2].querySelector('h3').textContent = totalPoints;
+                    statCards[3].querySelector('h3').textContent = '1'; // Solo el usuario actual
+                } else {
+                    // Invitado: calcular a partir de datos públicos
+                    const from = getFromDateForFilter();
+                    const res = await fetch(`${API_BASE}/public/recyclings?from=${from}`);
+                    const data = await res.json();
+                    const items = data.items || [];
+                    const totalRecords = items.length;
+                    const totalQty = items.reduce((s, r) => s + (r.kg || 0), 0);
+                    const totalPoints = items.reduce((s, r) => s + (r.points || 0), 0);
+                    const uniqueUsers = new Set(items.map(r => r.user_id)).size || 0;
+                    statCards[0].querySelector('h3').textContent = totalRecords;
+                    statCards[1].querySelector('h3').textContent = totalQty.toString();
+                    statCards[2].querySelector('h3').textContent = totalPoints;
+                    statCards[3].querySelector('h3').textContent = uniqueUsers.toString();
+                }
+            } catch (err) {
+                console.error('Error cargando estadísticas del panel:', err);
+            }
+        }
+
+        // Cargar datos para materiales y renderizar doughnut
+        async function loadMaterialChart() {
+            try {
+                let labels = [];
+                let data = [];
+                if (isGuest) {
+                    const from = getFromDateForFilter();
+                    const pub = await fetch(`${API_BASE}/public/recyclings?from=${from}`);
+                    const js = await pub.json();
+                    const items = js.items || [];
+                    const map = {};
+                    items.forEach(r => { const m = (r.material || 'Otro'); map[m] = (map[m] || 0) + (r.kg || 0); });
+                    labels = Object.keys(map);
+                    data = labels.map(l => map[l]);
+                } else {
+                    const from = getFromDateForFilter();
+                    const res = await fetch(`${API_BASE}/stats?from=${from}`, { headers: { 'Authorization': 'Bearer ' + getToken() } });
+                    if (!res.ok) throw new Error('No autorizado');
+                    const json = await res.json();
+                    labels = json.stats.map(s => s.material);
+                    data = json.stats.map(s => s.total_qty);
+                }
+                renderMaterialChart(labels, data);
+            } catch (err) {
+                console.error('Error cargando materiales:', err);
+                // Fallback
+                renderMaterialChart(['Tetra Pak', 'Plástico PP', 'Aluminio'], [12, 8, 10]);
+            }
+        }
+
+        function renderMaterialChart(labels, data) {
+            const ctx = document.getElementById('materialChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: ['#1976d2','#2e7d32','#ff9800','#607d8b','#e53935'],
+                        borderWidth: 0
+                    }]
                 },
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                }
-            }
-        });
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
 
-        // Filtros del dashboard
+        // Cargar evolución (inventada basada en datos)
+        async function loadEvolutionChart() {
+            try {
+                let labels = [];
+                let data = [];
+                if (isGuest) {
+                    const from = getFromDateForFilter();
+                    const pub = await fetch(`${API_BASE}/public/recyclings?from=${from}`);
+                    const js = await pub.json();
+                    const items = js.items || [];
+                    const map = {};
+                    items.forEach(r => { const k = (r.date || '').slice(0,7); if (!k) return; map[k] = (map[k] || 0) + (r.kg || 0); });
+                    labels = Object.keys(map).sort();
+                    data = labels.map(l => map[l]);
+                } else {
+                    const from = getFromDateForFilter();
+                    const res = await fetch(`${API_BASE}/evolution?from=${from}`, { headers: { 'Authorization': 'Bearer ' + getToken() } });
+                    if (!res.ok) throw new Error('No autorizado');
+                    const json = await res.json();
+                    labels = json.evolution.map(e => e.month);
+                    data = json.evolution.map(e => e.total_qty);
+                }
+                renderEvolutionChart(labels, data);
+            } catch (err) {
+                console.error('Error cargando evolución:', err);
+                // Fallback
+                renderEvolutionChart(['2023-08', '2023-09', '2023-10'], [10, 15, 20]);
+            }
+        }
+
+        function renderEvolutionChart(labels, data) {
+            const ctx = document.getElementById('evolutionChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Objetos reciclados (unidades)',
+                        data: data,
+                        backgroundColor: 'rgba(46, 125, 50, 0.2)',
+                        borderColor: '#2e7d32',
+                        borderWidth: 2,
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        // Cargar tabla de registros
+        async function loadRecordsTable() {
+            try {
+                // Usar endpoint diferente según el rol
+                let json;
+                const from = getFromDateForFilter();
+                if (isGuest) {
+                    const res = await fetch(`${API_BASE}/public/recyclings?from=${from}`);
+                    json = await res.json();
+                } else {
+                    const endpoint = role === 'admin' ? `/admin/recyclings?from=${from}` : `/me/records?from=${from}`;
+                    const res = await fetch(`${API_BASE}${endpoint}`, { headers: { 'Authorization': 'Bearer ' + getToken() } });
+                    if (!res.ok) throw new Error('No autorizado');
+                    json = await res.json();
+                }
+                
+                // Actualizar headers según rol
+                const thead = document.querySelector('table thead tr');
+                if (!isGuest && role === 'admin') {
+                    thead.innerHTML = `
+                        <th>Usuario</th>
+                        <th>Fecha</th>
+                        <th>Material</th>
+                        <th>Objeto</th>
+                        <th>Cantidad</th>
+                        <th>Puntos</th>
+                        <th>Centro de Reciclaje</th>
+                    `;
+                } else {
+                    thead.innerHTML = `
+                        <th>Fecha</th>
+                        <th>Material</th>
+                        <th>Objeto</th>
+                        <th>Cantidad</th>
+                        <th>Puntos</th>
+                        <th>Centro de Reciclaje</th>
+                    `;
+                }
+                
+                const tbody = document.querySelector('table tbody');
+                tbody.innerHTML = '';
+                
+                // Para admin mostrar username, para usuarios normales no
+                json.items.forEach(r => {
+                    const tr = document.createElement('tr');
+                    // Validar material
+                    const materialClass = (materialClassMap[r.material]) || 'otro';
+                    
+                    if (!isGuest && role === 'admin') {
+                        tr.innerHTML = `
+                            <td>${r.username || 'N/A'}</td>
+                            <td>${new Date(r.date).toLocaleDateString()}</td>
+                            <td><span class="material-tag ${materialClass}">${r.material || 'Desconocido'}</span></td>
+                            <td>${r.item || ''}</td>
+                            <td>${r.kg || 0}</td>
+                            <td>${r.points || ''}</td>
+                            <td>${r.center || 'intermediario de reciclaje S.A.S'}</td>
+                        `;
+                    } else {
+                        tr.innerHTML = `
+                            <td>${new Date(r.date).toLocaleDateString()}</td>
+                            <td><span class="material-tag ${materialClass}">${r.material || 'Desconocido'}</span></td>
+                            <td>${r.item || ''}</td>
+                            <td>${r.kg || 0}</td>
+                            <td>${r.points || ''}</td>
+                            <td>${r.center || 'intermediario de reciclaje S.A.S'}</td>
+                        `;
+                    }
+                    tbody.appendChild(tr);
+                });
+            } catch (err) {
+                console.error('Error cargando registros:', err);
+            }
+        }
+
+        // Inicializar
+        loadStatsPanel();
+        loadMaterialChart();
+        loadEvolutionChart();
+        loadRecordsTable(); // Cargar registros automáticamente al iniciar
+
+        // Filtros funcionales
         const filterBtns = document.querySelectorAll('.filter-btn');
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 filterBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-                // Aquí iría la lógica para actualizar los datos según el filtro seleccionado
+                if (btn.id === 'filter-week') currentFilter = 'week';
+                else if (btn.id === 'filter-month') currentFilter = 'month';
+                else if (btn.id === 'filter-year') currentFilter = 'year';
+                // Recargar data
+                loadStatsPanel();
+                loadMaterialChart();
+                loadEvolutionChart();
+                loadRecordsTable();
             });
         });
+
+        // Se eliminó el formulario rápido de "Añadir Registro" en esta página para mantener la creación solo desde la opción "Agregar Reciclaje" del menú.
+
+        // Exportar (placeholder)
+        const exportBtn = document.getElementById('export-btn');
+        if (exportBtn) {
+            exportBtn.addEventListener('click', () => {
+                alert('Función de exportar no implementada aún');
+            });
+        }
+
+        // Manejar botón de login
+        const loginBtn = document.getElementById('login-btn');
+        if (token) {
+            loginBtn.textContent = 'Cerrar Sesión';
+            loginBtn.onclick = () => {
+                localStorage.removeItem('aula_token');
+                localStorage.removeItem('aula_role');
+                location.reload();
+            };
+        } else {
+            loginBtn.onclick = () => window.location.href = 'login.html';
+        }
     </script>
 </body>
 </html>
