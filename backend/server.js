@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
+const fs = require('fs');
 const sqlite3 = require('sqlite3').verbose();
 // Intentar usar bcrypt nativo; si falla (p. ej., en Windows sin binarios), usar bcryptjs
 let bcrypt;
@@ -110,8 +111,12 @@ function getFromDate(req) {
   return null;
 }
 
-// Base de datos
-const db = new sqlite3.Database('./aula_eco_new.db', (err) => {
+// Base de datos: usar la base más completa si está presente (BDESTASI.db), si no usar aula_eco_new.db
+const preferredDb = 'BDESTASI.db';
+const fallbackDb = 'aula_eco_new.db';
+const DB_FILE = path.join(__dirname, fs.existsSync(path.join(__dirname, preferredDb)) ? preferredDb : fallbackDb);
+console.log('Using database file:', DB_FILE);
+const db = new sqlite3.Database(DB_FILE, (err) => {
   if (err) {
     console.error('Error opening database:', err.message);
   } else {
@@ -195,10 +200,22 @@ function initDatabase() {
             const hasDecimalQty = r4 && r4.nonInt > 0;
             const needRebuild = hasInvalid || overLimit || wrongUsers || total !== 15 || hasDecimalQty;
             if (needRebuild) {
-            console.log('Rebuilding recyclings dataset to enforce new policy (max 5 per user, allowed materials)...');
-            db.run('DELETE FROM recyclings', [], (e5) => {
-              if (e5) { console.error('Error clearing recyclings:', e5.message); return; }
-              populateSampleDataV2();
+            // Evitar borrado destructivo en arranque automático.
+            // Antes se eliminaban todos los registros y se volvían a sembrar 15 registros de ejemplo,
+            // lo que provoca pérdida de datos reales. En su lugar solo normalizamos y hacemos backfill
+            // sin borrar.
+            console.log('Dataset needs normalization but will NOT be rebuilt destructively on startup. Running normalization/backfill only.');
+            // Normalizar nombres a canónicos y aplicar backfill de item si hace falta
+            db.all('SELECT id, material FROM recyclings', (e6, all) => {
+              if (e6) { console.error('Error reading recyclings for normalization:', e6.message); return; }
+              all.forEach(r => {
+                const m = normalizeMaterialToSpanish(r.material);
+                if (ALLOWED_MATERIALS.includes(m)) {
+                  db.run('UPDATE recyclings SET material = ? WHERE id = ?', [m, r.id]);
+                }
+              });
+              // Intentar backfill sin borrar
+              backfillItemsIfMissing();
             });
             } else {
               // Normalizar nombres a canónicos por si acaso
