@@ -39,13 +39,21 @@
 
                 if (res.ok) {
                     const data = await res.json();
+                    // Guardar token y rol, luego redirigir directamente a la página principal
                     localStorage.setItem('aula_token', data.token);
                     localStorage.setItem('aula_role', data.role);
-                    alert('Login exitoso');
-                    window.location.href = 'prinpal_si_1.html';
+                    // Redirigir silenciosamente a la página principal de estadísticas
+                    window.location.href = 'body_principal.html';
                 } else {
-                    const error = await res.json();
-                    errorEl.textContent = error.error;
+                    // Mostrar mensaje sólo si falla
+                    let errMsg = 'Credenciales inválidas';
+                    try {
+                        const error = await res.json();
+                        errMsg = error.error || errMsg;
+                    } catch (e) {
+                        // ignore
+                    }
+                    errorEl.textContent = errMsg;
                 }
             } catch (err) {
                 errorEl.textContent = 'Error de conexión: ' + err.message;

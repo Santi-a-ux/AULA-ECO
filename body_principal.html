@@ -566,6 +566,9 @@
     <script>
     const API_BASE = 'http://localhost:3000/api';
     let currentFilter = 'week'; // week | month | year
+    // Mantener referencias a las instancias de Chart.js para evitar crear múltiples charts sobre el mismo canvas
+    let materialChartInstance = null;
+    let evolutionChartInstance = null;
 
         // Verificar login al cargar
         const token = localStorage.getItem('aula_token');
@@ -684,8 +687,8 @@
                     const items = js.items || [];
                     const map = {};
                     items.forEach(r => { const m = (r.material || 'Otro'); map[m] = (map[m] || 0) + (r.kg || 0); });
-                    labels = Object.keys(map);
-                    data = labels.map(l => map[l]);
+                    labels = Object.keys(map).sort();
+                    data = labels.map(l => Number(map[l] || 0));
                 } else {
                     const from = getFromDateForFilter();
                     const res = await fetch(`${API_BASE}/stats?from=${from}`, { headers: { 'Authorization': 'Bearer ' + getToken() } });
@@ -704,17 +707,26 @@
 
         function renderMaterialChart(labels, data) {
             const ctx = document.getElementById('materialChart').getContext('2d');
-            new Chart(ctx, {
+            // Destruir instancia anterior si existía
+            if (materialChartInstance) {
+                try { materialChartInstance.destroy(); } catch (e) { /* ignore */ }
+            }
+            materialChartInstance = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
                     labels: labels,
                     datasets: [{
-                        data: data,
-                        backgroundColor: ['#1976d2','#2e7d32','#ff9800','#607d8b','#e53935'],
+                        data: data.map(n => Number(n || 0)),
+                        backgroundColor: ['#1976d2','#2e7d32','#ff9800','#607d8b','#e53935','#8d6e63','#26a69a'],
                         borderWidth: 0
                     }]
                 },
-                options: { responsive: true, maintainAspectRatio: false }
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } },
+                    cutout: '50%'
+                }
             });
         }
 
@@ -731,7 +743,7 @@
                     const map = {};
                     items.forEach(r => { const k = (r.date || '').slice(0,7); if (!k) return; map[k] = (map[k] || 0) + (r.kg || 0); });
                     labels = Object.keys(map).sort();
-                    data = labels.map(l => map[l]);
+                    data = labels.map(l => Number(map[l] || 0));
                 } else {
                     const from = getFromDateForFilter();
                     const res = await fetch(`${API_BASE}/evolution?from=${from}`, { headers: { 'Authorization': 'Bearer ' + getToken() } });
@@ -750,13 +762,16 @@
 
         function renderEvolutionChart(labels, data) {
             const ctx = document.getElementById('evolutionChart').getContext('2d');
-            new Chart(ctx, {
+            if (evolutionChartInstance) {
+                try { evolutionChartInstance.destroy(); } catch (e) { /* ignore */ }
+            }
+            evolutionChartInstance = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: labels,
                     datasets: [{
                         label: 'Objetos reciclados (unidades)',
-                        data: data,
+                        data: data.map(n => Number(n || 0)),
                         backgroundColor: 'rgba(46, 125, 50, 0.2)',
                         borderColor: '#2e7d32',
                         borderWidth: 2,
@@ -764,7 +779,14 @@
                         fill: true
                     }]
                 },
-                options: { responsive: true, maintainAspectRatio: false }
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true }
+                    },
+                    plugins: { legend: { position: 'top' } }
+                }
             });
         }
 
